@@ -1,0 +1,62 @@
+Python >3.6  
+Selenium        (Automatiza/ emulate user interaction with browsers. No es para test, pero puede usarse)   
+Driver          (Comunica Selenium con el navegador)
+
+
+Unittest        (Libreria. Realiza pruebas unitarias (test) y genera informacion de la automatizacion.
+                Ayuda a crear clases, agrega decoradores, etc. y mas funcianalidades usando la automatizacion
+                de selenium. Recordar que selenium no fue creado para hacer test, sino automatizaciones)
+PyUniReport     (Libreria. Genera reporte en HTML (analizar/compartir))
+
+Unittest (PyTest)
+Test Fixture    Preparar antes y el despues de un test
+Test case       Funcion a probar
+Test Suite      Coleccion de test case
+Test runner     El que ejecuta los test case
+Test report     resporte del test
+
+--------------------------------------------------------
+Inicio de trabajo (instalaciones)
+--------------------------------------------------------
+1.- crear venv
+
+    python3 -m venv venvName
+    source venv/bin/activate 
+    touch .gitignore
+    ---- .gitignore >>>>> venv/ 
+
+2.- instalacion de python, selenium, y librerias deseadas (PyUniReport)
+
+    Python --version
+    pip install selenium  
+    pip install pyunitreport    
+
+3.- Descargar Driver (colocar en carpeta de proyecto descomprimido)
+    //// o instalar lo siguiente
+        
+    pip3 install webdriver-manager               (Administrar, Descarga e instala los controladores/web drivers de las pag web de forma automática automáticamente en Local para ejecutar pruebas de automatización de Web con Selenium.)
+
+
+---------------------------------------------------------
+Drivers
+---------------------------------------------------------
+Chrome: https://chromedriver.chromium.org/      (descargar el stable release)
+
+Edge: https://developer.microsoft.com/en-us/microsoft-edge/tools/webdriver/
+
+Firefox: https://github.com/mozilla/geckodriver/releases
+
+Safari: https://webkit.org/blog/6900/webdriver-support-in-safari-10/
+
+
+
+
+---------------------------------------------------------
+Basic
+---------------------------------------------------------
+Start session
+    driver = webdriver.Chrome()
+Navigate/actions
+    driver.get("https://www.google.com")
+End session
+    driver.quit()

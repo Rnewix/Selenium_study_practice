@@ -1,0 +1,6 @@
+Tenemos Selenium 
+    puro: Solo automatiza
+    con librerias: Para hacer las automatizaciones como si fueran test.
+
+                                                       
+Unittest
