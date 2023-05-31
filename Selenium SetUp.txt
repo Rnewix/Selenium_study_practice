@@ -1,62 +1,102 @@
-Python >3.6  
-Selenium        (Automatiza/ emulate user interaction with browsers. No es para test, pero puede usarse)   
-Driver          (Comunica Selenium con el navegador)
+-------------------------------------------------------
+Documentacion
+-------------------------------------------------------
+    Python >3.6  
+    Selenium        (Automatiza/ emulate user interaction with browsers. No testea, solo automatiza acciones)   
+    Driver          (Comunica Selenium con el navegador)(Existe un driver por cada navegador especifico)
 
 
-Unittest        (Libreria. Realiza pruebas unitarias (test) y genera informacion de la automatizacion.
-                Ayuda a crear clases, agrega decoradores, etc. y mas funcianalidades usando la automatizacion
-                de selenium. Recordar que selenium no fue creado para hacer test, sino automatizaciones)
-PyUniReport     (Libreria. Genera reporte en HTML (analizar/compartir))
+    Unittest        Libreria Python para test de cualquier codigo Python. Puede integrar Selenium para test en Web automatizada. Realiza pruebas unitarias (test).  (Alternativas = pytest, nose)   
+    PyUnitReport    Libreria Python. Genera reporte en HTML de unittest (Visual en html)
 
-Unittest (PyTest)
-Test Fixture    Preparar antes y el despues de un test
-Test case       Funcion a probar
-Test Suite      Coleccion de test case
-Test runner     El que ejecuta los test case
-Test report     resporte del test
+    -------------------------------------------------------
+    Unittest (PyTest)
+    -------------------------------------------------------
+    Test Fixture    Preparar antes y el despues de un test 
+    Test case       Funcion a probar
+    Test Suite      Coleccion de test case
+    Test runner     El que ejecuta los test case
+    Test report     resporte del test
+
+    Ejemplo                                                           
+        def setUpClass(cls):                                                                        #<---- Test Fixture. Prepara lo requerido antes del test.
+            cls.driver = webdriver.Chrome(service=ChromeService(ChromeDriverManager().install()))   
+            
+        def test_visit_wikipedia(self):                                                             #<---- Pruebas Unitarias / cada test case
+            self.driver.get('https://www.wikipedia.org')                              
+            ...
+                                                            
+        def tearDownClass(cls):                                                                     #<---- Test Fixture. Preparado para dictar como culminar
+            cls.driver.quit()                                                         
+
+        if __name__ == "__main__":                                          
+            unittest.main(                                                
+                verbosity = 2,                                            
+                testRunner = HTMLTestRunner(                                                        #<---- Creacion de reporte con TestRuner de PyUnitReport. output = carpeta, report_name = nombre de html con el reporte
+                    output = 'report',                                                 
+                    report_name = 'test-report'))                                
+    ---------------------------------------------------------
+
 
 --------------------------------------------------------
 Inicio de trabajo (instalaciones)
 --------------------------------------------------------
-1.- crear venv
+1.- Crear venv
 
     python3 -m venv venvName
     source venv/bin/activate 
+    git init
     touch .gitignore
     ---- .gitignore >>>>> venv/ 
 
-2.- instalacion de python, selenium, y librerias deseadas (PyUniReport)
+2.- Instalacion de python y selenium. Instalacion de otras librerias deseadas (PyUniReport)
 
     Python --version
     pip install selenium  
     pip install pyunitreport    
 
-3.- Descargar Driver (colocar en carpeta de proyecto descomprimido)
-    //// o instalar lo siguiente
-        
-    pip3 install webdriver-manager               (Administrar, Descarga e instala los controladores/web drivers de las pag web de forma automática automáticamente en Local para ejecutar pruebas de automatización de Web con Selenium.)
+3.- Conseguir Driver para Selenium para cada browser
+
+        Metodo 1: Instalar manager de driver dentro de Selenium (Administrador y autoinstalador de drivers) (Autoinstala driver mas actualadecuado cada vez que se corre selenium)
+            
+            pip install webdriver-manager               
+
+            -----------------------------------------------------------------------------------
+            scrip.py
+            -----------------------------------------------------------------------------------
+                from selenium import webdriver                                          
+                from selenium.webdriver.chrome.service import Service as ChromeService 
+                from webdriver_manager.chrome import ChromeDriverManager
+
+                driver = webdriver.Chrome(service=ChromeService(ChromeDriverManager().install()))
 
 
----------------------------------------------------------
-Drivers
----------------------------------------------------------
-Chrome: https://chromedriver.chromium.org/      (descargar el stable release)
+        Metodo 2: Descargar Driver especifico manualmente y colocar en carpeta de proyecto descomprimido
 
-Edge: https://developer.microsoft.com/en-us/microsoft-edge/tools/webdriver/
+            ---------------------------------------------------------
+            Drivers
+            ---------------------------------------------------------
+            Chrome: https://chromedriver.chromium.org/      (descargar el stable release)
 
-Firefox: https://github.com/mozilla/geckodriver/releases
+            Edge: https://developer.microsoft.com/en-us/microsoft-edge/tools/webdriver/
 
-Safari: https://webkit.org/blog/6900/webdriver-support-in-safari-10/
+            Firefox: https://github.com/mozilla/geckodriver/releases
+
+            Safari: https://webkit.org/blog/6900/webdriver-support-in-safari-10/
+
+            -----------------------------------------------------------------------------------
+            scrip.py
+            -----------------------------------------------------------------------------------
+                from selenium import webdriver                                          
+                from selenium.webdriver.chrome.service import Service as ChromeService    
+
+                driver = webdriver.Chrome(service=ChromeService("C:\URL completa))        
+                    o
+                s = ChromeService("C:\URL completa)
+                driver = webdriver.Chrome(service = s)
+                        
+                
 
 
 
 
----------------------------------------------------------
-Basic
----------------------------------------------------------
-Start session
-    driver = webdriver.Chrome()
-Navigate/actions
-    driver.get("https://www.google.com")
-End session
-    driver.quit()

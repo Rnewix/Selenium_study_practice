@@ -1,0 +1,329 @@
+"""----------------------------------------------
+    Selenium 4 // UnitTest (pyunitreport)               
+-------------------------------------------------"""
+# https://www.selenium.dev/selenium/docs/api/py/api.html
+
+"""--------------------
+Indice
+--------------------"""
+"""
+- Script basico
+- Drivers 
+- Documentacion
+- Navegacion
+- Locators
+- Interaction
+- Assertions (validadores)
+"""
+
+"""--------------------------------------
+Script Basico 
+--------------------------------------"""
+
+"""Scrip basico para test con Unittest (Libreria de python) que aprovecha Automatizacion de Selenium para testear pag web.
+Usando OPP (python) para ordenar los test case""" 
+
+# Archivo .py
+
+### Importacion de librerias ##############
+import unittest                                                                     #<---- Para que python haga test
+from pyunitreport import HTMLTestRunner                                             ###<-- (OPC)Para imprimir resultados de unittest en HTML
+import time
+
+### Importaciones de Selenium #############
+from selenium import webdriver                                                      #<---- Lo mas importante de Selenium. Driver que conectara .py/Selenium con web (.chrome .edge .firefox .chrominum) 
+from selenium.webdriver.chrome.service import Service as ChromeService              #<---- Importar la clase Service (empieza y detiene el driver descargado) (este caso es para Chrome)
+from webdriver_manager.chrome import ChromeDriverManager                            ###<-- (OPC) Importar el manejador que descagara e instalara el driver (No descargar manualmente drive y poner URL)
+
+
+class TestName(unittest.TestCase):                                                  #<---- Crear clase para el Test. (Unittest)
+
+    @classmethod                                                                    #<---- Decorador (multiples test - una sola pagina)
+    def setUpClass(cls):                                                            #<---- Test Fixture. Inicia lo necesario para comenzar test (Unittest)
+        cls.driver = webdriver.Chrome(service=ChromeService(ChromeDriverManager().install()))    #<--- Establecer el driver. 1.- webdriver_manager instala Driver (opc manual: URL). 2.- Service toma driver para ON/OFF. 3.- Manejador webdriver con Driver necesario depositado en objeto. (Selenium). 
+        time.sleep(2)
+
+    def test_visit_wikipedia(self):                                                 #<---- Cada pruebas Unitaria como metodos de la clase  (inician siempre con test_ (buena practica)) (Unittest)
+        self.driver.get('https://www.wikipedia.org')                                #<---- Test case: Abrir Webpage. Driver realiza acciones (Selenium)
+        time.sleep(2)
+
+    @classmethod                                                                    #<---- Decorador (multiples test - una sola pagina)
+    def tearDownClass(cls):                                                         #<---- Test Fixture. Culminacion despues de tests (Unittest)
+        cls.driver.quit()                                                           #<---- Driver cierra Webpage (Bueno para ahorrar recursos)
+
+
+if __name__ == "__main__":                                                          
+    unittest.main(                                                                  
+        verbosity = 2,                                            
+        testRunner = HTMLTestRunner(                                                #<---- TestRuner genera reporte HTML de resultado del test (pyunitreport instalado para Unittest) 
+            output = 'report',                                                              #<-- Carpeta donde se colocara el reporte
+            report_name = 'test-report')                                                    #<-- Nombre que tendra el reporte
+            )
+                   
+
+
+"""-------------------------------------------------------------
+    Drivers     
+-------------------------------------------------------------"""
+# https://github.com/SergeyPirogov/webdriver_manager
+
+    #Chrome
+"""
+        from selenium import webdriver
+        from selenium.webdriver.chrome.service import Service as ChromeService
+        from webdriver_manager.chrome import ChromeDriverManager
+
+        cls.driver = webdriver.Chrome(service=ChromeService(ChromeDriverManager().install()))
+"""
+
+    #Edge
+"""
+        from selenium import webdriver
+        from selenium.webdriver.edge.service import Service as EdgeService
+        from webdriver_manager.microsoft import EdgeChromiumDriverManager
+
+        cls.driver = webdriver.Edge(service=EdgeService(EdgeChromiumDriverManager().install()))
+"""
+
+    #Firefox
+"""
+        from selenium import webdriver
+        from selenium.webdriver.firefox.service import Service as FirefoxService
+        from webdriver_manager.firefox import GeckoDriverManager
+
+        cls.driver = webdriver.Firefox(service=FirefoxService(GeckoDriverManager().install()))
+"""
+
+    #Chromiun
+"""
+        from selenium import webdriver
+        from selenium.webdriver.chrome.service import Service as ChromiumService
+        from webdriver_manager.chrome import ChromeDriverManager
+        from webdriver_manager.core.utils import ChromeType
+
+        cls.driver = webdriver.Chrome(service=ChromiumService(ChromeDriverManager(chrome_type=ChromeType.CHROMIUM).install()))
+"""
+
+
+
+        
+
+"""-------------------------------------------------------------
+Navegacion     
+-------------------------------------------------------------"""
+
+driver.get("http://www.example.com")
+
+driver.forward()
+
+driver.back()
+
+#cambio de ventana
+driver.switch_to_window("windowName")
+
+#Cambio de frame
+driver.switch_to_frame("frameName")
+
+#Cambio de frema a subframe child
+driver.switch_to_frame("frameName.0.child")
+
+#Regresar al parent frame
+driver.switch_to.default_content()
+
+#Cambio a un pop up
+alert = driver.switch_to.alert
+
+
+
+"""----------------------------------------------------------
+    Locators
+-------------------------------------------------------------"""
+"""
+    Seleccionar elementos de la pag web para interactuar con ellos.
+    Seleccionar un elemento especifico, seleccionar varios, seleccionar varios y luego hacerles un ciclo for, etc...
+    Requiere la importacion de By
+
+        Tradicional locators:
+            Identifican precisamente un elemento
+            Id / Name / class / XPATH / CSS selector / Link Text / PartialLinkText
+            
+        Relative Locators:
+            Cuando un elemento no es facilmente identificable, se puede apoyar en otros que si lo son:
+            Above / Below / Left of / Right of / Near / Chain of multiples relative locators
+            
+    Normalmente se vacia el elemento localizado en una variable para posteriormente manipularlo con Interactions, etc.
+------------------------------------------------------------"""
+
+#import by
+from selenium.webdriver.common.by import By
+
+
+#Tradicional locators---------- .find_element()
+        
+driver.find_element(By.ID, "search")     
+    
+driver.find_element(By.NAME, "q")
+
+"""<html>
+<body>
+<p class="content">Site content goes here.</p>
+</body>
+</html>"""
+driver.find_element(By.CLASS_NAME, "content")  
+driver.find_element(By.CLASS_NAME, "search-button")
+
+driver.find_element(By.TAG_NAME, "img")
+driver.find_element(By.TAG_NAME, "h1")
+
+driver.find_element(By.XPATH, "//*[@id='top']/body/div/div[2]/div[2]/ul/li[4]/a/img")
+
+"""<html>
+<body>
+<p class="content">Site content goes here.</p>
+</body>
+</html>  
+https://saucelabs.com/resources/articles/selenium-tips-css-selectors"""
+driver.find_element(By.CSS_SELECTOR,"p.content")
+driver.find_element(By.CSS_SELECTOR, "div.header-minicart span.icon")  
+
+
+"""<html>
+<body>
+<p>Are you sure you want to do this?</p>
+<a href="continue.html">Continue</a>
+<a href="cancel.html">Cancel</a>
+</body>
+</html> """
+driver.find_element(By.LINK_TEXT, 'Continue')
+driver.find_element(By.PARTIAL_LINK_TEXT, 'Conti')
+
+
+    
+#Relative Locators------------- locate_with()
+
+locate_with(By.ID, "search").above({By.ID: "password"})
+
+locate_with(By.ID, "search").below({By.ID: "email"})
+
+locate_with(By.ID, "search").to_left_of({By.ID: "submit"})
+
+locate_with(By.ID, "search").to_right_of({By.ID: "cancel"})
+
+locate_with(By.ID, "search").near({By.ID: "lbl-email"})
+    
+locate_with(By.TAG_NAME, "button").below({By.ID: "email"}).to_right_of({By.ID: "cancel"})
+
+
+#---------------------------------------------------------
+#---------------------------------------------------------
+from selenium.webdriver.common.by import By
+
+def test_search_text_field(self):
+    search_field = self.driver.find_element(By.ID, "search")
+
+submit_button = locate_with(By.TAG_NAME, "button").below({By.ID: "email"}).to_right_of({By.ID: "cancel"})
+#---------------------------------------------------------
+#---------------------------------------------------------    
+
+
+
+"""-------------------------------------------------------------
+Interactions     https://www.selenium.dev/documentation/webdriver/elements/interactions/
+-------------------------------------------------------------"""
+"""
+Instrucciones para manipura e interactuar
+
+5 basicos:
+    click       (to any element)
+    send keys   (text fields and content editable elements)
+    clear       (text fields and content editable elements)
+    submit      (send form elements)
+    select      ()
+"""
+
+
+.clear()
+
+.send_keys("pycon")
+
+.click()
+
+.submit()
+
+
+
+#Keys  (nos provee de keys como RETURN, F1, ALT etc)
+from selenium.webdriver.common.keys import Keys
+
+.send_keys(Keys.RETURN)
+
+.send_keys(" and some", Keys.ARROW_DOWN)
+
+#Select
+from selenium.webdriver.support.ui import Select
+
+select = Select(driver.find_element(By.NAME, 'name'))
+
+select.select_by_index(index)
+
+select.select_by_visible_text("text")
+
+select.select_by_value(value)    
+
+select.deselect_all()
+
+
+#Drag and drop 
+from selenium.webdriver import ActionChains
+
+element = driver.find_element(By.NAME, "source")
+
+target = driver.find_element(By.NAME, "target")
+
+action_chains = ActionChains(driver)
+
+action_chains.drag_and_drop(element, target).perform()
+
+
+
+
+"""-------------------------------------------------------------
+Assertions    (valdacion)
+-------------------------------------------------------------"""
+"""
+Validar que un valor en la ejecucion del test sea correcto
+Si falso = Test se para
+Si Verdadero = Test continua
+"""
+
+self.assertIn("Python", driver.title)
+self.assertNotIn("No results found.", driver.page_source)
+
+
+
+"""-------------------------------------------------------------
+waits     
+------------------------------------------------------------"""
+"""
+Implicit wait
+Explicit wait
+
+"""
+
+
+
+
+"""-------------------------------------------------------------
+Cookies
+------------------------------------------------------------"""
+
+
+# Go to the correct domain
+driver.get("http://www.example.com")
+
+# Now set the cookie. This one's valid for the entire domain
+cookie = {'name' : 'foo', 'value' : 'bar'}
+driver.add_cookie(cookie)
+
+# And now output all the available cookies for the current URL
+driver.get_cookies()

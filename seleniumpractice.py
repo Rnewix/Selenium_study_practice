@@ -11,7 +11,7 @@ from webdriver_manager.chrome import ChromeDriverManager
 
 
 class TestName(unittest.TestCase):                                    #<---- Crear clase para un Test case (/Unittest)
-
+    
     @classmethod                                                            #<---- Decorador (multiples test - una sola pagina)
     def setUpClass(cls):                                                    #<---- Inicializa Test (Test Fixture/Unittest)
         cls.driver = webdriver.Chrome(service=ChromeService(ChromeDriverManager().install()))    #<---Instala Driver de Browser. Asigna Driver a variable driver. 
