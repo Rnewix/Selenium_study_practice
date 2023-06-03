@@ -62,7 +62,7 @@ Inicio de trabajo (instalaciones)
             pip install webdriver-manager               
 
             -----------------------------------------------------------------------------------
-            scrip.py
+            script.py
             -----------------------------------------------------------------------------------
                 from selenium import webdriver                                          
                 from selenium.webdriver.chrome.service import Service as ChromeService 
@@ -90,9 +90,9 @@ Inicio de trabajo (instalaciones)
                 from selenium import webdriver                                          
                 from selenium.webdriver.chrome.service import Service as ChromeService    
 
-                driver = webdriver.Chrome(service=ChromeService("C:\URL completa))        
+                driver = webdriver.Chrome(service=ChromeService("C:\URL completa"))        
                     o
-                s = ChromeService("C:\URL completa)
+                s = ChromeService("C:\URL completa")
                 driver = webdriver.Chrome(service = s)
                         
                 

@@ -6,7 +6,7 @@ import time
 
 ### Driver #################################
 from selenium import webdriver                                          #<---- Importar driver especifico para web en donde se realizara test 
-from selenium.webdriver.chrome.service import Service as ChromeService            #<-- (Este para Chrome)
+from selenium.webdriver.chrome.service import Service #as ChromeService            #<-- (Este para Chrome)
 from webdriver_manager.chrome import ChromeDriverManager
 
 
@@ -14,9 +14,11 @@ class TestName(unittest.TestCase):                                    #<---- Cre
     
     @classmethod                                                            #<---- Decorador (multiples test - una sola pagina)
     def setUpClass(cls):                                                    #<---- Inicializa Test (Test Fixture/Unittest)
-        cls.driver = webdriver.Chrome(service=ChromeService(ChromeDriverManager().install()))    #<---Instala Driver de Browser. Asigna Driver a variable driver. 
+        cls.driver = webdriver.Chrome(service=Service(ChromeDriverManager().install())) #<---Instala Driver de Browser. Asigna Driver a variable driver. 
+       #cls.driver = webdriver.Chrome(service=ChromeService(ChromeDriverManager().install()))    
         time.sleep(2)
-
+            
+            
     def test_visit_wikipedia(self):                                     #<----Pruebas Unitarias a realizar (inician siempre con test_ (buena practica))
         self.driver.get('https://www.wikipedia.org')                              #<--Abrir Webpage
         time.sleep(2)

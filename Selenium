@@ -20,7 +20,7 @@ Indice
 Script Basico 
 --------------------------------------"""
 
-"""Scrip basico para test con Unittest (Libreria de python) que aprovecha Automatizacion de Selenium para testear pag web.
+"""Script basico para test con Unittest (Libreria de python) que aprovecha Automatizacion de Selenium para testear pag web.
 Usando OPP (python) para ordenar los test case""" 
 
 # Archivo .py
@@ -63,11 +63,11 @@ if __name__ == "__main__":
 
 
 """-------------------------------------------------------------
-    Drivers     
+    Drivers     (Automaticos Web-Driver)
 -------------------------------------------------------------"""
 # https://github.com/SergeyPirogov/webdriver_manager
 
-    #Chrome
+#Chrome
 """
         from selenium import webdriver
         from selenium.webdriver.chrome.service import Service as ChromeService
@@ -76,7 +76,7 @@ if __name__ == "__main__":
         cls.driver = webdriver.Chrome(service=ChromeService(ChromeDriverManager().install()))
 """
 
-    #Edge
+#Edge
 """
         from selenium import webdriver
         from selenium.webdriver.edge.service import Service as EdgeService
@@ -85,7 +85,7 @@ if __name__ == "__main__":
         cls.driver = webdriver.Edge(service=EdgeService(EdgeChromiumDriverManager().install()))
 """
 
-    #Firefox
+#Firefox
 """
         from selenium import webdriver
         from selenium.webdriver.firefox.service import Service as FirefoxService
@@ -94,7 +94,7 @@ if __name__ == "__main__":
         cls.driver = webdriver.Firefox(service=FirefoxService(GeckoDriverManager().install()))
 """
 
-    #Chromiun
+#Chromiun
 """
         from selenium import webdriver
         from selenium.webdriver.chrome.service import Service as ChromiumService
@@ -105,12 +105,219 @@ if __name__ == "__main__":
 """
 
 
+"""------------------------------------------------
+Documentacion      
+--------------------------------------------------"""
+"""
+https://www.selenium.dev/selenium/docs/api/py/api.html
 
-        
+selenium.common
+    selenium.common.exceptions
+selenium.webdriver
+    selenium.webdriver.common                   .by .keys .key_actions .MouseButton
+    selenium.webdriver.support                  .relative_locator .select
+    selenium.webdriver.remote
+    selenium.webdriver.webkitgtk
+    selenium.webdriver.chrome                   .service .webdriver	.options	
+    selenium.webdriver.chromium                 .service .webdriver	.options .remote_connection	
+    selenium.webdriver.edge                     .service .webdriver	.options
+    selenium.webdriver.firefox                  .service .webdriver	.options .remote_connection	etc.
+    selenium.webdriver.safari                   .service .webdriver	.options
+    selenium.webdriver.ie                       .service .webdriver	.options
+"""
 
+selenium.webdriver.common.by        
+"""
+    selenium.webdriver.common.by.By
+        .By                     Class   
+                                Atributos:                                 
+                                    ID = 'id'
+                                    NAME = 'name'
+                                    CLASS_NAME = 'class name'
+                                    XPATH = 'xpath'
+                                    CSS_SELECTOR = 'css selector'
+                                    LINK_TEXT = 'link text'
+                                    PARTIAL_LINK_TEXT = 'partial link text'
+                                    TAG_NAME = 'tag name'
+                                    
+"""
+selenium.webdriver.common.keys
+"""
+    selenium.webdriver.common.keys.Keys
+        .Keys                   Class   
+                                Atributos:
+                                    ADD = '\ue025'
+                                    ALT = '\ue00a'
+                                    ARROW_DOWN = '\ue015'
+                                    ARROW_LEFT = '\ue012'
+                                    ARROW_RIGHT = '\ue014'
+                                    ARROW_UP = '\ue013'
+                                    BACKSPACE = '\ue003'
+                                    BACK_SPACE = '\ue003'
+                                    CANCEL = '\ue001'
+                                    CLEAR = '\ue005'
+                                    COMMAND = '\ue03d'
+                                    CONTROL = '\ue009'
+                                    DECIMAL = '\ue028'
+                                    DELETE = '\ue017'
+                                    DIVIDE = '\ue029'
+                                    DOWN = '\ue015'
+                                    END = '\ue010'
+                                    ENTER = '\ue007'
+                                    EQUALS = '\ue019'
+                                    ESCAPE = '\ue00c'
+                                    F1 = '\ue031'¶
+                                    F10 = '\ue03a'
+                                    F11 = '\ue03b'
+                                    F12 = '\ue03c'
+                                    F2 = '\ue032'
+                                    F3 = '\ue033'
+                                    F4 = '\ue034'
+                                    F5 = '\ue035'
+                                    F6 = '\ue036'
+                                    F7 = '\ue037'
+                                    F8 = '\ue038'
+                                    F9 = '\ue039'
+                                    HELP = '\ue002'
+                                    HOME = '\ue011'
+                                    INSERT = '\ue016'
+                                    LEFT = '\ue012'
+                                    LEFT_ALT = '\ue00a'
+                                    LEFT_CONTROL = '\ue009'
+                                    LEFT_SHIFT = '\ue008'
+                                    META = '\ue03d'
+                                    MULTIPLY = '\ue024'
+                                    NULL = '\ue000'
+                                    NUMPAD0 = '\ue01a'
+                                    NUMPAD1 = '\ue01b'
+                                    NUMPAD2 = '\ue01c'
+                                    NUMPAD3 = '\ue01d'
+                                    NUMPAD4 = '\ue01e'
+                                    NUMPAD5 = '\ue01f'
+                                    NUMPAD6 = '\ue020'
+                                    NUMPAD7 = '\ue021'
+                                    NUMPAD8 = '\ue022'
+                                    NUMPAD9 = '\ue023'
+                                    PAGE_DOWN = '\ue00f'
+                                    PAGE_UP = '\ue00e'
+                                    PAUSE = '\ue00b'
+                                    RETURN = '\ue006'
+                                    RIGHT = '\ue014'
+                                    SEMICOLON = '\ue018'
+                                    SEPARATOR = '\ue026'
+                                    SHIFT = '\ue008'
+                                    SPACE = '\ue00d'
+                                    SUBTRACT = '\ue027'
+                                    TAB = '\ue004'
+                                    UP = '\ue013'
+                                    ZENKAKU_HANKAKU = '\ue040'
+    """
+selenium.webdriver.chrome.webdriver
+"""
+    selenium.webdriver.chrome.webdriver.WebDriver(service_args=None, options: selenium.webdriver.chrome.options.Options = None)
+        .WebDriver              Class
+                                Metodos:
+                                    get(url:str)               Loads a web page in the current browser session.
+                                    quit()                      Closes the browser and shuts down the Driver
+                                    back()                      Goes one step backward in the browser history.
+                                    close()                     Closes the current window.
+                                    forward()                   Goes one step forward in the browser history.
+                                    refresh()                   Refreshes the current page
+                                    maximize_window()
+                                    minimize_window()
+                                    fullscreen_window()         Invokes the window manager-specific -full screen- operation.
+                                    find_element(...)           Find an element given a By and locator. 
+                                                                    Usage:  element = driver.find_element(By.ID, 'foo')
+                                                                    Return type:    WebElement
+                                    find_elements(...)          Find elements given a By and locator.
+                                                                    Usage:  elements = driver.find_elements(By.ID, 'foo')
+                                                                    Return type:    list of WebElement
+                                    switch_to   
+                                                                    Usage:	
+                                                                    driver.switch_to.window('window_name_ej_main')
+                                                                    alert = driver.switch_to.alert              Returns:    Object containing all options to switch focus into
+                                                                    element = driver.switch_to.active_element   Returns:    Object containing all options to switch focus into
+                                                                    driver.switch_to.default_content()
+                                                                    driver.switch_to.frame('frame_name')
+                                                                    driver.switch_to.frame(1)
+                                                                    driver.switch_to.frame(driver.find_elements(By.TAG_NAME, "iframe")[0])
+                                                                    driver.switch_to.parent_frame()
+
+                                    implicitly_wait(time_to_wait: float)   Sets a timeout to  wait for an element to be found/ command to be completed 
+                                                                    Args:   float/int in seconds
+                                                                    Usage:  driver.implicitly_wait(30)
+                                    set_page_load_timeout(float) Set the amount of time to wait for a page load to complete before throwing an error.
+                                                                    Args:   Amount of time to wait in seconds
+                                                                    Usage:  driver.set_page_load_timeout(30)
+                                    save_screenshot(str)        Saves a screenshot of the current window to a PNG image file.
+                                                                    Args:   The full path you wish to save your screenshot to. Should end with a .png extension.
+                                                                    Usage:  driver.save_screenshot('/Screenshots/foo.png')
+                                    print_page()                Takes PDF of the current page
+                                    
+                                    title                       Returns the title of the current page.
+                                                                    Usage:  title = driver.title
+                                    current_url                 Gets the URL of the current page.
+                                                                    Usage:	driver.current_url
+                                    ---------------------             
+                                    delete_cookie(str)
+                                    delete_all_cookies()
+                                    get_cookie(str) 
+                                    get_cookies() 
+                                    get_log(log_type)           driver.get_log('browser') ('driver') ('client') ('server')
+                                    get_credentials() 
+                                    get_issue_message()
+                                    get_network_conditions()
+                                    get_window_position()
+                                    get_window_size()
+                                    orientation                 Movile   usage: driver.orientation
+                                    remove_all_credentials() 
+                                    set_user_verified(verified: bool)
+                                    set_window_size(int,int)
+                                    
+"""
+selenium.webdriver.common.action_chains
+"""
+    selenium.webdriver.common.action_chains.ActionChains(driver, duration=250)
+        .ActionChains           Class
+                                Metodos:
+                                    perform()                               Realiza todo las acciones que se enlisten (ver abajo)
+                                    
+                                    -----mouse-------
+                                    click(on_element=None)                  If object(WebElement) = None > clicks on current mouse position.
+                                    context_click(on_element=None)          Right click. 
+                                    double_click(on_element=None)       
+                                    click_and_hold(on_element=None)   
+                                    drag_and_drop(source, target)           source: The element to mouse down. target: The element to mouse up.
+                                    drag_and_drop_by_offset(source,x,y)     source: The element to mouse down. 
+                                    move_to_element(to_element)
+                                    move_to_element_with_offset(to_element,x,y)
+                                    release(on_element=None)                Releasing a held mouse button on an element.
+                                    
+                                    -----Teclado------
+                                    send_keys(*keys)                        Sends keys to current focused element.
+                                    send_keys_to_element(element, *keys)
+                                    key_down(value, element=None)           Presiona y mantiene una tecla. value: The modifier key to send (ctrl). element: The element to send keys, If None, sends a key to current focused element.
+                                    key_up(value, element=None)             Suelta la tecla presionada. value: The modifier key to send (ctrl). element: The element to send keys, If None, sends a key to current focused element.
+                                            ctrl+c =  ActionChains(driver).key_down(Keys.CONTROL).send_keys('c').key_up(Keys.CONTROL).perform()
+                                            
+                                    ----Wheel--------
+                                    scroll(x: int, y: int, delta_x: int, delta_y: int, duration: int = 0, origin: str = 'viewport')[source]
+                                                                            Sends wheel scroll information to the browser to be processed.
+                                                                                Args:	
+                                                                                x: starting X coordinate
+                                                                                y: starting Y coordinate
+                                                                                delta_x: the distance the mouse will scroll on the x axis. A negative value scrolls left
+                                                                                delta_y: the distance the mouse will scroll on the y axis. A negative value scrolls up.
+
+                                    
+
+
+"""
+ 
 """-------------------------------------------------------------
 Navegacion     
 -------------------------------------------------------------"""
+#selenium.webdriver.chrome.webdriver
 
 driver.get("http://www.example.com")
 
@@ -118,90 +325,74 @@ driver.forward()
 
 driver.back()
 
-#cambio de ventana
-driver.switch_to_window("windowName")
+driver.switch_to_window("windowName")           ##????????
 
-#Cambio de frame
-driver.switch_to_frame("frameName")
+driver.switch_to_frame("frameName")             ##????????
 
-#Cambio de frema a subframe child
-driver.switch_to_frame("frameName.0.child")
+driver.switch_to_frame("frameName.0.child")     ##????????
 
-#Regresar al parent frame
 driver.switch_to.default_content()
 
-#Cambio a un pop up
-alert = driver.switch_to.alert
-
+alert = driver.switch_to.alert                  #Cambio a un pop up
 
 
 """----------------------------------------------------------
     Locators
 -------------------------------------------------------------"""
 """
-    Seleccionar elementos de la pag web para interactuar con ellos.
-    Seleccionar un elemento especifico, seleccionar varios, seleccionar varios y luego hacerles un ciclo for, etc...
-    Requiere la importacion de By
-
-        Tradicional locators:
-            Identifican precisamente un elemento
-            Id / Name / class / XPATH / CSS selector / Link Text / PartialLinkText
-            
-        Relative Locators:
-            Cuando un elemento no es facilmente identificable, se puede apoyar en otros que si lo son:
-            Above / Below / Left of / Right of / Near / Chain of multiples relative locators
-            
-    Normalmente se vacia el elemento localizado en una variable para posteriormente manipularlo con Interactions, etc.
+    Seleccionar elementos de la pag web (para interactuar con ellos.). Normalmente se vacia el elemento localizado en una variable para posteriormente manipularlo con Interactions, etc.
+        
+    Tradicional locators:       Id / Name / class / XPATH / CSS selector / Link Text / PartialLinkText  
+    Relative Locators:          Above / Below / Left of / Right of / Near / Chain of multiples relative locators
 ------------------------------------------------------------"""
 
 #import by
 from selenium.webdriver.common.by import By
 
 
-#Tradicional locators---------- .find_element()
+#Tradicional locators---------- .find_element()                         
+"""
+selenium.webdriver.chrome.webdriver.find_element() 
+    
+    .find_element(by='id', value: Optional[str] = None)
+"""
         
 driver.find_element(By.ID, "search")     
     
 driver.find_element(By.NAME, "q")
 
-"""<html>
-<body>
-<p class="content">Site content goes here.</p>
-</body>
-</html>"""
-driver.find_element(By.CLASS_NAME, "content")  
-driver.find_element(By.CLASS_NAME, "search-button")
+driver.find_element(By.CLASS_NAME, "content")               # <p class="content">Site content goes here.</p>
 
-driver.find_element(By.TAG_NAME, "img")
 driver.find_element(By.TAG_NAME, "h1")
 
 driver.find_element(By.XPATH, "//*[@id='top']/body/div/div[2]/div[2]/ul/li[4]/a/img")
 
-"""<html>
-<body>
-<p class="content">Site content goes here.</p>
-</body>
-</html>  
-https://saucelabs.com/resources/articles/selenium-tips-css-selectors"""
 driver.find_element(By.CSS_SELECTOR,"p.content")
-driver.find_element(By.CSS_SELECTOR, "div.header-minicart span.icon")  
 
+driver.find_element(By.LINK_TEXT, 'Continue')               # <a href="continue.html">Continue</a>
 
-"""<html>
-<body>
-<p>Are you sure you want to do this?</p>
-<a href="continue.html">Continue</a>
-<a href="cancel.html">Cancel</a>
-</body>
-</html> """
-driver.find_element(By.LINK_TEXT, 'Continue')
-driver.find_element(By.PARTIAL_LINK_TEXT, 'Conti')
+driver.find_element(By.PARTIAL_LINK_TEXT, 'Conti')          # <a href="continue.html">Continue</a>
 
 
     
-#Relative Locators------------- locate_with()
+#Relative Locators------------- locate_with(By, str) // with_tag_name(str)
+"""
+selenium.webdriver.support.relative_locator.RelativeBy
+selenium.webdriver.support.relative_locator.locate_with()
+selenium.webdriver.support.relative_locator.with_tag_name()        <<<<<< VA A SER DEPRECADO/USAR locate_with()
 
-locate_with(By.ID, "search").above({By.ID: "password"})
+1.- Crear objeto de la class RelativeBy con las funciones locate_with() / with_tag_name().
+        El objeto tendra todas las coincidencias.
+2.- Usar metodos del nuevo objeto heredados de class RelativeBy (.above(), etc) para encontrar  el WebElement con la mejor coincidencia 
+
+ej.-
+    element = driver.find_elements(locate_with(By.CSS_SELECTOR, “p”).above({By.ID, “below”})
+                    Or
+    lowest = driver.find_element(By.ID, “below”)
+    element = driver.find_elements(locate_with(By.CSS_SELECTOR, “p”).above(lowest))
+"""
+
+locate_with(By.ID, "search").above({By.ID: "password"})                                            #<--- def locate_with crea objeto (de la Class RelativeBy) con todos lass coincidencias. Este objeto tiene como metodos above(), to_left_of(), etc.
 
 locate_with(By.ID, "search").below({By.ID: "email"})
 
@@ -215,14 +406,12 @@ locate_with(By.TAG_NAME, "button").below({By.ID: "email"}).to_right_of({By.ID: "
 
 
 #---------------------------------------------------------
-#---------------------------------------------------------
-from selenium.webdriver.common.by import By
-
-def test_search_text_field(self):
-    search_field = self.driver.find_element(By.ID, "search")
-
-submit_button = locate_with(By.TAG_NAME, "button").below({By.ID: "email"}).to_right_of({By.ID: "cancel"})
-#---------------------------------------------------------
+# from selenium.webdriver.common.by import By
+#
+# def test_search_text_field(self):
+#    search_field = self.driver.find_element(By.ID, "search")
+#
+# submit_button = locate_with(By.TAG_NAME, "button").below({By.ID: "email"}).to_right_of({By.ID: "cancel"})
 #---------------------------------------------------------    
 
 
