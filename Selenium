@@ -232,8 +232,10 @@ selenium.webdriver.chrome.webdriver
                                     find_elements(...)          Find elements given a By and locator.
                                                                     Usage:  elements = driver.find_elements(By.ID, 'foo')
                                                                     Return type:    list of WebElement
-                                    switch_to   
-                                                                    Usage:	
+                                    
+                                    current_window_handle           Returns the handle of the current window. driver.current_window_handle
+                                    window_handles                  Returns the handles of all windows within the current session. driver.window_handles
+                                    switch_to                       Usage:	
                                                                     driver.switch_to.window('window_name_ej_main')
                                                                     alert = driver.switch_to.alert              Returns:    Object containing all options to switch focus into
                                                                     element = driver.switch_to.active_element   Returns:    Object containing all options to switch focus into
@@ -249,6 +251,7 @@ selenium.webdriver.chrome.webdriver
                                     set_page_load_timeout(float) Set the amount of time to wait for a page load to complete before throwing an error.
                                                                     Args:   Amount of time to wait in seconds
                                                                     Usage:  driver.set_page_load_timeout(30)
+                                                                    
                                     save_screenshot(str)        Saves a screenshot of the current window to a PNG image file.
                                                                     Args:   The full path you wish to save your screenshot to. Should end with a .png extension.
                                                                     Usage:  driver.save_screenshot('/Screenshots/foo.png')
@@ -273,6 +276,8 @@ selenium.webdriver.chrome.webdriver
                                     remove_all_credentials() 
                                     set_user_verified(verified: bool)
                                     set_window_size(int,int)
+                                    set_window_position(x, y, windowHandle: str = 'current') → dict
+
                                     
 """
 selenium.webdriver.common.action_chains
@@ -344,6 +349,16 @@ selenium.webdriver.remote.webelement
                                         etc.
 
 """
+selenium.webdriver.common.alert
+"""
+    Selenium.webdriver.common.alert.Alert(driver)
+        .Alert(driver)      
+                            Alert(driver).accept()          Accepting alert prompts
+                            Alert(driver).dismiss()         Dismissing alert prompts
+                            send_keys(keysToSend)
+                            text                            Gets the text of the Alert
+"""
+
  
 """-------------------------------------------------------------
 Navegacion     
@@ -462,49 +477,50 @@ Instrucciones para manipura e interactuar
 """
 
 
-.clear()
-
-.send_keys("pycon")
-
-.click()
-
-.submit()
+.clear()                                #selenium.webdriver.remote.webelement
+.send_keys("pycon")                     #selenium.webdriver.common.action_chains
+.click()                                #selenium.webdriver.common.action_chains // selenium.webdriver.remote.webelement
+.submit()                               #selenium.webdriver.remote.webelement
 
 
-
-#Keys  (nos provee de keys como RETURN, F1, ALT etc)
-from selenium.webdriver.common.keys import Keys
-
+#SEND
+from selenium.webdriver.common.keys import Keys             #Keys  (nos provee de keys como RETURN, F1, ALT etc)
 .send_keys(Keys.RETURN)
-
 .send_keys(" and some", Keys.ARROW_DOWN)
 
 #Select
 from selenium.webdriver.support.ui import Select
-
 select = Select(driver.find_element(By.NAME, 'name'))
-
 select.select_by_index(index)
-
 select.select_by_visible_text("text")
-
 select.select_by_value(value)    
-
 select.deselect_all()
 
 
 #Drag and drop 
 from selenium.webdriver import ActionChains
-
 element = driver.find_element(By.NAME, "source")
-
 target = driver.find_element(By.NAME, "target")
-
 action_chains = ActionChains(driver)
-
 action_chains.drag_and_drop(element, target).perform()
 
 
+"""-------------------------------------------------------------
+Alerts    
+-------------------------------------------------------------"""
+
+#Accepting / Dismissing alert prompts:
+Alert(driver).accept()
+Alert(driver).dismiss()
+
+#Inputting a value into an alert prompt:
+name_prompt = Alert(driver) 
+name_prompt.send_keys("Willian Shakesphere") 
+name_prompt.accept()
+
+#Reading a the text of a prompt for verification:
+alert_text = Alert(driver).text 
+self.assertEqual("Do you wish to quit?", alert_text)
 
 
 """-------------------------------------------------------------
