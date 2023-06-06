@@ -259,6 +259,8 @@ selenium.webdriver.chrome.webdriver
                                     
                                     title                       Returns the title of the current page.
                                                                     Usage:  title = driver.title
+                                    page_source                 Gets the source of the current page.
+                                                                    Usage:	driver.page_source
                                     current_url                 Gets the URL of the current page.
                                                                     Usage:	driver.current_url
                                     ---------------------             
@@ -352,13 +354,29 @@ selenium.webdriver.remote.webelement
 selenium.webdriver.common.alert
 """
     Selenium.webdriver.common.alert.Alert(driver)
-        .Alert(driver)      
-                            Alert(driver).accept()          Accepting alert prompts
-                            Alert(driver).dismiss()         Dismissing alert prompts
-                            send_keys(keysToSend)
-                            text                            Gets the text of the Alert
+        .Alert(driver)      Class
+                            Metodos etc
+                                Alert(driver).accept()          Accepting alert prompts
+                                Alert(driver).dismiss()         Dismissing alert prompts
+                                send_keys(keysToSend)
+                                text                            Gets the text of the Alert
 """
+selenium.webdriver.remote.switch_to
+"""
+    selenium.webdriver.remote.switch_to.SwitchTo(driver)
+        .SwitchTo(driver)   Class
+    
+                                active_element                  Returns the element with focus, or BODY if nothing has focus.
+                                                                    Usage: element = driver.switch_to.active_element
+                                alert                           Switches focus to an alert on the page.
+                                                                    Usage: alert = driver.switch_to.alert
+                                                                    
+                                window(window_name)             Switches to the specified window. window_name: The name/window handle of the window to switch to.
+                                                                    Usage: driver.switch_to.window('main')
+                                new_window(type_hint=None)      Switches to a new top-level browsing context. The type hint can be one of “tab” or “window”. If not specified the browser will automatically select it.
+                                                                    Usage:	driver.switch_to.new_window('tab')
 
+"""
  
 """-------------------------------------------------------------
 Navegacion     
@@ -372,12 +390,6 @@ driver.forward()
 driver.back()
 
 driver.switch_to_window("windowName")           ##????????
-
-driver.switch_to_frame("frameName")             ##????????
-
-driver.switch_to_frame("frameName.0.child")     ##????????
-
-driver.switch_to.default_content()
 
 alert = driver.switch_to.alert                  #Cambio a un pop up
 
@@ -496,7 +508,6 @@ select.select_by_visible_text("text")
 select.select_by_value(value)    
 select.deselect_all()
 
-
 #Drag and drop 
 from selenium.webdriver import ActionChains
 element = driver.find_element(By.NAME, "source")
@@ -531,10 +542,9 @@ Validar que un valor en la ejecucion del test sea correcto
 Si falso = Test se para
 Si Verdadero = Test continua
 """
-
+unittest.TestCase.assertEqual
 self.assertIn("Python", driver.title)
 self.assertNotIn("No results found.", driver.page_source)
-
 
 
 """-------------------------------------------------------------

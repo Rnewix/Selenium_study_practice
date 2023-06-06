@@ -12,29 +12,40 @@ Documentacion
     -------------------------------------------------------
     Unittest (PyTest)
     -------------------------------------------------------
-    Test Fixture    Preparar antes y el despues de un test 
-    Test case       Funcion a probar
-    Test Suite      Coleccion de test case
-    Test runner     El que ejecuta los test case
+    Test Fixture    Metodos. Methods that execute before and after a test method executes. Preparan el ambiente de test
+    Assertions      Methods that check the behavior of the component being tested.
+    Test case       Metodo/Funcion a probar
+    Test Suite      A group of related tests executed together. Coleccion de test case
+    Test runner     Programa que ejecuta los test case/suites
     Test report     resporte del test
 
-    Ejemplo                                                           
+
+    Ejemplo UnitTest/Selenium  
+    ---------------------------------------------------------   
+    class TestWebpage(unittest.TestCase):                                                           #<---- Crea objeto que hereda de TesCase class que tiene como metodos los test fixture and test cases
+
         def setUpClass(cls):                                                                        #<---- Test Fixture. Prepara lo requerido antes del test.
             cls.driver = webdriver.Chrome(service=ChromeService(ChromeDriverManager().install()))   
             
+
         def test_visit_wikipedia(self):                                                             #<---- Pruebas Unitarias / cada test case
-            self.driver.get('https://www.wikipedia.org')                              
-            ...
-                                                            
+            self.driver.get('https://www.wikipedia.org')  
+
+        def test_...
+
+
         def tearDownClass(cls):                                                                     #<---- Test Fixture. Preparado para dictar como culminar
             cls.driver.quit()                                                         
 
         if __name__ == "__main__":                                          
-            unittest.main(                                                
-                verbosity = 2,                                            
+            unittest.main(                                                                          #<---- unittest.main() to run unitest in the call
+                verbosity = 2,                                                                      #<---- Get more info on the result from UnitTest
                 testRunner = HTMLTestRunner(                                                        #<---- Creacion de reporte con TestRuner de PyUnitReport. output = carpeta, report_name = nombre de html con el reporte
                     output = 'report',                                                 
-                    report_name = 'test-report'))                                
+                    report_name = 'test-report'))  
+
+    NOTA:   Nombre de clase     Test...
+            Nombre de metodos   def test_...
     ---------------------------------------------------------
 
 
