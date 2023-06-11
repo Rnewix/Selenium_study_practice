@@ -13,7 +13,12 @@ Indice
 - Navegacion
 - Locators
 - Interaction
-- Assertions (validadores)
+
+- Alert
+- Cookies
+- Waits
+
+- Assertions (validadores/UnitTest)
 """
 
 """--------------------------------------
@@ -534,18 +539,6 @@ alert_text = Alert(driver).text
 self.assertEqual("Do you wish to quit?", alert_text)
 
 
-"""-------------------------------------------------------------
-Assertions    (valdacion)
--------------------------------------------------------------"""
-"""
-Validar que un valor en la ejecucion del test sea correcto
-Si falso = Test se para
-Si Verdadero = Test continua
-"""
-unittest.TestCase.assertEqual
-self.assertIn("Python", driver.title)
-self.assertNotIn("No results found.", driver.page_source)
-
 
 """-------------------------------------------------------------
 waits     
@@ -573,3 +566,18 @@ driver.add_cookie(cookie)
 
 # And now output all the available cookies for the current URL
 driver.get_cookies()
+
+
+
+
+"""-------------------------------------------------------------
+Assertions    (Ver UnitTest)
+-------------------------------------------------------------"""
+"""
+Validar que una ejecucion automatizada tiene un resultado esperado. 
+Como es parte de test solo se puede realizar por medio de UnitTest
+"""
+
+unittest.TestCase.assertEqual
+self.assertIn("Python", driver.title)
+self.assertNotIn("No results found.", driver.page_source)

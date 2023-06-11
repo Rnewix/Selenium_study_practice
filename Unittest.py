@@ -2,20 +2,38 @@
 #https://www.pythontutorial.net/python-unit-testing/python-unittest/
 #https://docs.python.org/3/library/unittest.html
 
+"""
+    -----------------------------------
+    INDICE
+    ------------------------------------
+    Unitest basics
+    Test fixtures               setUp() / setUpClass() / setUpModule()
+    Assert methods (UnitTest)
+    Skiptest
+    Run test
+    Test suites 
+    Organize test
+    Covertura del test (% testeado de un proyecto
+    
+    >>Mock/patch
+    >>Stub
+    >>Parameterized tests    subTest()
+"""
+
 """-------------------------------------------------------
     Unittest (PyTest)
 -------------------------------------------------------"""
 """
     Test Fixture    Metodos setUp(self)/tearDown(self). Methods that execute before and after a test method executes. 
     Assertions      Methods that check the behavior of the component being tested.
-    Test case       Metodo/Funcion a probar
-    Test Suite      A group of related tests executed together. Coleccion de test case
+    Test case       Metodo/Funcion a probar ///unittest.TestCase()
+    Test Suite      A group of related tests executed together. Coleccion de test case ///unittest.TestSuite()
     Test runner     Programa que ejecuta los test case/suites
     Test report     resporte del test
 """   
  
 """   
-UnitTest
+UnitTest basics
 
 The basic unit testing are the test cases (single scenarios that must be set up and checked for correctness (with asserts))
 In unittest, test cases are represented by unittest.TestCase instances:          
@@ -82,62 +100,181 @@ class TestWebpage(unittest.TestCase):                                           
 
 
 """----------------------------------------
-    @classmethod 
+    Test fixtures setUpClass() / setUpModule()
 -------------------------------------------
-Con clase heredada de unittest.TestCase, cada test case correra uno a uno (corre uno y cierra)
-Para correr cada test case seguido por otro sin cerrar la prueba debemos aplicar directamente los Test Fixtures
-de la clase padre. 
+Los metodos setUp() and  tearDown() de clase heredada de unittest.TestCase, se aplican en cada metodo de la clase.  Abren y cierran en cada uno de los test cases (metodos)
+Para correr todos los test cases de una clase de una sola vez sin cerrar la prueba, usar los Test Fixtures de la clase padre.
+Pada correr todos los test cases de todas las clases de manera corrida usar setUpModule() and  tearDownModule()
+
+setUp() and  tearDown() runs before and after EVERY test method in the test class.
+setUpClass() and tearDownClass() runs before and after ALL test methods of a class. (requiere decorador para metodo de padre classmethod)
+setUpModule() and tearDownModule() are function runs before and after all the test methods in that module.py, (go outside the class).
 """
 
-@classmethod                                                            #<---- Decorador para llamar metodo de padre
-def setUpClass(cls):                                                    #<---- setUp >>> setUpClass
-    cls.driver = webdriver                                              #<----  self. >>> cls.
-    
-@classmethod                                                            #<---- Decorador para llamar metodo de padre
-def tearDownClass(cls):                                                 #<---- tearDown >>>> tearDownClass
-    cls.driver.quit()                                                   #<----  self. >>> cls.
+import unittest
 
+class Test(unittest.TestCase):
+    @classmethod                                                            #<---- Decorador para llamar metodo de padre
+    def setUpClass(cls):                                                    #<---- setUp >>> setUpClass
+        cls.driver = webdriver                                              #<----  self. >>> cls.
+        
+    @classmethod                                                            #<---- Decorador para llamar metodo de padre
+    def tearDownClass(cls):                                                 #<---- tearDown >>>> tearDownClass
+        cls.driver.quit()                                                   #<----  self. >>> cls.
+
+#-----------------------------------------------------------------------------------------------------------
+
+import unittest
+
+def setUpModule():
+    pass
+def tearDownModule():
+    pass
+
+class Test(unittest.TestCase):
+    def test_case_1(self):
+        pass
+    def test_case_2(self):
+        pass
 
 
 """-----------------------------------------------------
-Assert methods
+Assert methods (UnitTest)
 -----------------------------------------------------"""
-# Assert methods of the TestCase class
+"""Assert methods of the TestCase class"""            
+## X = resultado a testear // Y = con lo que se comparara/resultado esperado  // MSG = (Opc/str) texto que aparacera si Fail
 
-assert methods          # introduce to you a brief overview of the assert methods of the TestCase class.
-.assertEqual()           # test if two values are equal.
-.assertAlmostEqual()     # test if two values are approximately equal.
-.assertIs()              # test if two objects are the same.
-.assertIsInstance()      # test if an object is an instance of a class or a tuple of classes.
-.assertIsNone()          # test if an expression is None.
-.assertTrue()            # test if an expression is True.
-.assertIn()              # test if a member is in a container.
+assertEqual(x, y, msg=None)	            # x == y
+assertNotEqual(x,y,msg=None)	        # x != y
+assertTrue(x, msg=None)	                # bool(x) is True
+assertFalse(x, msg=None)	            # bool(x) is False
+assertIs(x, y , msg=None)	            # x is y (verificar si es el mismo objeto)
+assertIsNot(x, y, msg=None)	            # x is not y (verificar si no es el mismo objeto)
+assertIsNone(x, msg=None)	            # x is None
+assertIsNotNone(x , msg=None)	        # x is not None
+assertIn(x, y, msg=None)	            # x in y
+assertNotIn(x, y, msg=None)	            # x not in y
+assertIsInstance(x, y, msg=None)	    # isinstance(x, y) x es instancia de la clase y
+assertNotIsInstance(x, y, msg=None)	    # not isinstance(x, y)  x no es instancia de la clase y
+assertGreater(x, y)	                    # x > y
+assertGreaterEqual(x, y)	            # x >= y
+assertLess(x, y)	                    # x < y
+assertLessEqual(x, y)	                # x <= y
 
+assertAlmostEqual(first, second, places=7, msg=None, delta=None)	            # round(x-y, 7) == 0
+assertNotAlmostEqual(first, second, places=7, msg=None, delta=None)	            # round(x-y, 7) != 0
+assertRegex(s, r)	                    # r.search(s)
+assertNotRegex(s, r)	                # not r.search(s)
+assertCountEqual(x, y)	                # x and y have the same number of elements in the same number.
 
+#ej-----------------------------------------
 import unittest
+from moduloX import Widget
 
 class TestCaseWidget(unittest.TestCase):
     def setUp(self):
         self.widget = Widget('The widget')
 
     def test_default_widget_size(self):
-        self.assertEqual(self.widget.size(), (50,50),
-                         'incorrect default size')
+        self.assertEqual(self.widget.size(), (50,50), 'incorrect default size')
 
     def test_widget_resize(self):
         self.widget.resize(100,150)
-        self.assertEqual(self.widget.size(), (100,150),
-                         'wrong size after resize')
+        self.assertEqual(self.widget.size(), (100,150), 'wrong size after resize')
+#-------------------------------------------
+
+
+"""Assert methods that check exceptions / warnings / log messages """
+
+with self.assertRaises(Excetiondesired):         #Evalua que la funcion raise del objeto testeado efectivamente levante un exception. Sino lo levanta es un fail.
+
+#ej-----------------------------------------
+
+    def test_length_with_wrong_type(self):          
+        with self.assertRaises(TypeError):          #<-- TypeError = Error para tipo de valor float/string/int/etc... Square lo tiene en su codigo.
+            square = Square('bab')                  #<-- Valor es string y leng esperaba int/float.
+
+# -------------------------------------------
+
+assertRaises(exc, fun, *args, **kwds)	        # fun(*args, **kwds) raises exc
+assertRaisesRegex(exc, r, fun, *args, **kwds)	# fun(*args, **kwds) raises exc and the message matches regex r
+assertWarns(warn, fun, *args, **kwds)	        # fun(*args, **kwds) raises warn
+assertWarnsRegex(warn, r, fun, *args, **kwds)	# fun(*args, **kwds) raises warn and the message matches regex r
+assertLogs(logger, level)	                    # The with block logs on logger with a minimum level
+assertNoLogs(logger, level)	                    # The with block does not log on logger with a minimum level
+
+
+
+
+"""-----------------------------------------------------
+Skip test
+-----------------------------------------------------"""
+
+@unittest.skip()                                    #<--- Skip un test case(test method) o Skip toda una clase.
+@unittest.skip('text a mostrar')
+
+#ej.----------------------------------
+
+class TestDemo(unittest.TestCase):                  #
+    @unittest.skip('Work in progress')              #<---- Skipea solo el caso 1 y corre los demas
+    def test_case_1(self):                          #
+        self.assertEqual(1+1, 2)                    #
+    
+    
+@unittest.skip('Work in progress')                  #<---- Skipea todos los casos de la clase
+class TestDemo(unittest.TestCase):                  #
+    def test_case_1(self):                          #
+        self.assertEqual(1+1, 2)                    #
+
+#-------------------------------------
+
+
+@unittest.skipIf(condition, "text reason")          #<---- Salta test si cumple una condicion
+@unittest.skipUnless(condition, "text reason")      #<---- Salta test a menos que cumpla una condicion
+#ej----------------------------------------
+from sys import platform
+
+class TestDemo(unittest.TestCase):
+    def test_case_1(self):
+        self.assertEqual(1+1, 2)
+        
+    @unittest.skipIf(platform.startswith("win"), "Do not run on Windows")   #<-- Saltara case 2 si es windows la plataforma
+    def test_case_2(self):
+        self.assertIsNotNone([])
+
 
 
 """-----------------------------------------------------
 Test suites    https://docs.python.org/3/library/unittest.html
 -----------------------------------------------------"""
+"""group tests together according to the features they test."""
 
-It is recommended that you use TestCase implementations to group tests together according to the features they test. 
-unittest provides a mechanism for this: the test suite, represented by unittest’s TestSuite class. 
-In most cases, calling unittest.main() will do the right thing and collect all the module’s test cases for you and execute them.
-However, should you want to customize the building of your test suite, you can do it yourself:
+# Everything 
+python -m unittest discover -v                  #<--  run all tests in the test directory, (from the project folder). 
+                                                #         discover is a subcommand that finds all the tests in the project.
+# Single module
+python -m unittest paquete.module -v      
+
+# Single test class
+python -m unittest paquete.module.testclass -v 
+    
+# Single test method
+python -m unittest paquete.module.testclass.testmethod -v
+
+#customized test suite
+
+
+
+"""-----------------------------------------------------
+Test suites    https://docs.python.org/3/library/unittest.html
+-----------------------------------------------------"""
+"""
+Group tests together according to the features they test.
+    1.- Import modules
+    2.- create a object from TestSuite class (unittest.TestSuite)
+    3.- add test cases 
+    4.- Run the suite with the desired test cases
+"""
 
 def suite():
     suite = unittest.TestSuite()
@@ -151,19 +288,55 @@ if __name__ == '__main__':
 
 
 
+"""----------------------------------
+    Organize test
+---------------------------------"""
+"""
+Project
+    ├── shapes
+    |  ├── circle.py
+    |  ├── shape.py
+    |  └── square.py
+    └── test                        <<<<<<
+        ├── test_circle.py
+        ├── test_square.py
+        └── __init__.py
+"""
 
 
-Section 3. Test doubles
-This section introduces to you the test doubles to decouple the system under test code from the rest of the system so that code can be tested in isolation.
+"""----------------------------------
+    Test coverage
+---------------------------------"""
+"""Test coverage is the porcentage of lines executed by test cases of the script base"""
 
-Mock – learn how to use the Mock class to mimic behaviors of another function or class.
-patch() – show you how to use the patch() to temporarily replace an object with another object for testing.
-Stubs – show you how to use the MagicMock class & patch() to create stubs.
-Mocking requests module – learn how to mock the requests module to test an API call using the unittest module.
+python -m coverage run -m unittest      # 1o. generate the coverage data
+python -m coverage report               # 2o. turn the coverage data into a report
+python -m coverage html                 # 3o. generate the coverage report in HTML format
 
 
-Section 4. Test coverage & Parameterized tests
-This section introduces you to the test coverage and how to define parameterized tests using the subTest() context manager.
 
-Generating test coverage reports – learn about test coverage and how to generate the test coverage report using the coverage module.
-Defining parameterized tests using subTest() – show you how to define parameterized tests using the unittest’s subTest() context manager.
+"""----------------------------------
+    Still not done
+---------------------------------"""
+"""
+Mock                                    use the Mock (mimic) class to mimic behaviors of another function or class
+        unittest.mock
+        unittest.mock.MagicMock
+
+patch()                                 temporarily replace an object with another object for testing         
+        unittest.mock.patch()
+        
+Stub                                    return hard-coded values for testing.
+
+Mocking requests module                 mock the requests module to test an API call using the unittest module
+
+"""
+
+"""--------------------------------------
+Parameterized tests          subTest()
+-----------------------------------------"""
+"""
+By using the subTest() context manager, the test do not stop after the first failure. 
+Also, it shows a very detailed message after each failure so that you can examine the case.
+"""
+
