@@ -8,6 +8,7 @@
     ------------------------------------
     Unitest basics
     Test fixtures               setUp() / setUpClass() / setUpModule()
+    unittest.main()
     Assert methods (UnitTest)
     Skiptest
     Run test
@@ -18,6 +19,8 @@
     >>Mock/patch
     >>Stub
     >>Parameterized tests    subTest()
+    
+    >>Reports
 """
 
 """-------------------------------------------------------
@@ -89,10 +92,7 @@ class TestWebpage(unittest.TestCase):                                           
 
     if __name__ == "__main__":                                          
         unittest.main(                                                                          #<---- unittest.main() to run unitest in the call
-            verbosity = 2,                                                                      #<---- Get more info on the result from UnitTest
-            testRunner = HTMLTestRunner(                                                        #<---- Creacion de reporte con TestRuner de PyUnitReport. output = carpeta, report_name = nombre de html con el reporte
-                output = 'report',                                                 
-                report_name = 'test-report'))  
+            verbosity = 2)                                                                      #<---- Get more info on the result from UnitTest  
 
 #NOTA:   Nombre de clase     Test...
 #        Nombre de metodos   def test_...
@@ -136,6 +136,54 @@ class Test(unittest.TestCase):
         pass
     def test_case_2(self):
         pass
+
+
+"""----------------------------------------
+    unittest.main()
+-------------------------------------------"""
+""" A command-line program that loads a set of tests from module and runs them; this is primarily for making test modules conveniently executable.
+Esta función imprimirá un informe de resultados incluyendo el tiempo total de ejecución, el número de pruebas ejecutadas, 
+el número de pruebas correctas, el número de errores y el número de pruebas fallidas. Sin el, el resultado de la prueba se emitirá sin resumen.
+The simplest use for this function is to include the following line at the end of a test script:"""
+if __name__ == '__main__':
+    unittest.main()
+    
+# Argumentos unitest.main
+unittest.main(
+    module='__main__', 
+    defaultTest=None, 
+    argv=None, 
+    testRunner=None, 
+    testLoader=unittest.defaultTestLoader, 
+    exit=True, 
+    verbosity=1,                                    #run tests with more detailed information if set: verbosity=2
+    failfast=None, 
+    catchbreak=None, 
+    buffer=None, 
+    warnings=None)
+
+
+
+The defaultTest argument is either the name of a single test or an iterable of test names to run if no test names are specified via argv. If not specified or None and no test names are provided via argv, all tests found in module are run.
+
+The argv argument can be a list of options passed to the program, with the first element being the program name. If not specified or None, the values of sys.argv are used.
+
+The testRunner argument can either be a test runner class or an already created instance of it. By default main calls sys.exit() with an exit code indicating success or failure of the tests run.
+
+The testLoader argument has to be a TestLoader instance, and defaults to defaultTestLoader.
+
+main supports being used from the interactive interpreter by passing in the argument exit=False. This displays the result on standard output without calling sys.exit():
+
+    from unittest import main
+    main(module='test_module', exit=False)
+    
+The failfast, catchbreak and buffer parameters have the same effect as the same-name command-line options.
+
+The warnings argument specifies the warning filter that should be used while running the tests. If it’s not specified, it will remain None if a -W option is passed to python (see Warning control), otherwise it will be set to 'default'.
+
+Calling main actually returns an instance of the TestProgram class. This stores the result of the tests run as the result attribute.
+
+
 
 
 """-----------------------------------------------------
@@ -340,3 +388,34 @@ By using the subTest() context manager, the test do not stop after the first fai
 Also, it shows a very detailed message after each failure so that you can examine the case.
 """
 
+
+"""--------------------------------------
+Tests Report          HTMLTestRunner
+-----------------------------------------"""
+
+#1.- Instalar Reportador
+pip install html-testRunner 
+
+#2.- Codigo test runner 
+from HtmlTestRunner import HTMLTestRunner
+
+if __name__ == "__main__":                                          
+        unittest.main(                                                                          #<---- unittest.main() to run unitest in the call
+            testRunner = HTMLTestRunner(                                                        #<---- Creacion de reporte con TestRuner de PyUnitReport. output = carpeta, report_name = nombre de html con el reporte
+                output = 'report',                                                 
+                report_name = 'test-report'))
+
+
+#Report test suites ?????
+
+#2.- Codigo test runner 
+kwargs = {
+    "output": "reports/smoke-report",
+    "report_name": "smoke-report",
+    "combine_reports": True,
+    "add_timestamp": False
+}
+
+# ? create runner with the parameters and run
+runner = HTMLTestRunner(**kwargs)
+runner.run(smoke_test)

@@ -7,7 +7,7 @@ Documentacion
 
 
     Unittest        Libreria Python para test de cualquier codigo Python. Puede integrar Selenium para test en Web automatizada. Realiza pruebas unitarias (test).  (Alternativas = pytest, nose)   
-    PyUnitReport    Libreria Python. Genera reporte en HTML de unittest (Visual en html)
+    HtmlTestRunner  Libreria Python. Genera reporte en HTML de unittest (Visual en html) (malo era el pyunitreport)
 
     -------------------------------------------------------
     Unittest (PyTest)
@@ -64,11 +64,11 @@ Inicio de trabajo (instalaciones)
 
     Python --version
     pip install selenium  
-    pip install pyunitreport    
+    pip install html-testRunner (antes pyunitreport)
 
 3.- Conseguir Driver para Selenium para cada browser
 
-        Metodo 1: Instalar manager de driver dentro de Selenium (Administrador y autoinstalador de drivers) (Autoinstala driver mas actualadecuado cada vez que se corre selenium)
+        Metodo 1: Autoinstalacion. Instalar webdriver-manager para Selenium (Administrador y autoinstalador de drivers) (Autoinstala driver mas actualadecuado cada vez que se corre selenium)
             
             pip install webdriver-manager               
 

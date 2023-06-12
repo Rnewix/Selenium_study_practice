@@ -32,7 +32,7 @@ Usando OPP (python) para ordenar los test case"""
 
 ### Importacion de librerias ##############
 import unittest                                                                     #<---- Para que python haga test
-from pyunitreport import HTMLTestRunner                                             ###<-- (OPC)Para imprimir resultados de unittest en HTML
+from HtmlTestRunner import HTMLTestRunner                                           ###<-- (OPC)Para imprimir resultados de unittest en HTML
 import time
 
 ### Importaciones de Selenium #############
@@ -60,7 +60,7 @@ class TestName(unittest.TestCase):                                              
 if __name__ == "__main__":                                                          
     unittest.main(                                                                  
         verbosity = 2,                                            
-        testRunner = HTMLTestRunner(                                                #<---- TestRuner genera reporte HTML de resultado del test (pyunitreport instalado para Unittest) 
+        testRunner = HTMLTestRunner(                                                #<---- TestRuner genera reporte HTML de resultado del test  
             output = 'report',                                                              #<-- Carpeta donde se colocara el reporte
             report_name = 'test-report')                                                    #<-- Nombre que tendra el reporte
             )
@@ -548,7 +548,7 @@ Implicit wait
 Explicit wait
 
 """
-
+driver.implicitly_wait(30)          #Sets a sticky timeout to implicitly wait for an element to be found, or a command to complete. This method only needs to be called one time per session.
 
 
 
