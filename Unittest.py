@@ -151,9 +151,9 @@ if __name__ == '__main__':
 # Argumentos unitest.main
 unittest.main(
     module='__main__', 
-    defaultTest=None, 
+    defaultTest=None,                               # Run specific test. If None all tests found in module run.
     argv=None, 
-    testRunner=None, 
+    testRunner=None,                                # By default main calls sys.exit() that only print if the test was success or failure. Especificar el runner que gustes
     testLoader=unittest.defaultTestLoader, 
     exit=True, 
     verbosity=1,                                    #run tests with more detailed information if set: verbosity=2
@@ -161,27 +161,6 @@ unittest.main(
     catchbreak=None, 
     buffer=None, 
     warnings=None)
-
-
-
-The defaultTest argument is either the name of a single test or an iterable of test names to run if no test names are specified via argv. If not specified or None and no test names are provided via argv, all tests found in module are run.
-
-The argv argument can be a list of options passed to the program, with the first element being the program name. If not specified or None, the values of sys.argv are used.
-
-The testRunner argument can either be a test runner class or an already created instance of it. By default main calls sys.exit() with an exit code indicating success or failure of the tests run.
-
-The testLoader argument has to be a TestLoader instance, and defaults to defaultTestLoader.
-
-main supports being used from the interactive interpreter by passing in the argument exit=False. This displays the result on standard output without calling sys.exit():
-
-    from unittest import main
-    main(module='test_module', exit=False)
-    
-The failfast, catchbreak and buffer parameters have the same effect as the same-name command-line options.
-
-The warnings argument specifies the warning filter that should be used while running the tests. If it’s not specified, it will remain None if a -W option is passed to python (see Warning control), otherwise it will be set to 'default'.
-
-Calling main actually returns an instance of the TestProgram class. This stores the result of the tests run as the result attribute.
 
 
 
@@ -323,7 +302,14 @@ Group tests together according to the features they test.
     3.- add test cases 
     4.- Run the suite with the desired test cases
 """
+#Grouping tests
+unittest.TestSuite()		#Clase, TestSuite(tests=())
+    addTest(test)		    # Add a TestCase or a TestSuite to the suite individually.
+    addTests(tests)		    # Add all the tests from an iterable (with TestCase and TestSuite instances) 
+    run(suite())		    # Run the tests associated with this suite, 
+    countTestCases()		# Count the number of test in the suite
 
+#ej..................................................
 def suite():
     suite = unittest.TestSuite()
     suite.addTest(WidgetTestCase('test_default_widget_size'))
@@ -333,6 +319,7 @@ def suite():
 if __name__ == '__main__':
     runner = unittest.TextTestRunner()
     runner.run(suite())
+
 
 
 

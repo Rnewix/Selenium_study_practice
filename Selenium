@@ -544,11 +544,44 @@ self.assertEqual("Do you wish to quit?", alert_text)
 waits     
 ------------------------------------------------------------"""
 """
-Implicit wait
-Explicit wait
+Python build-in
+    time.sleep()                    Hold the script
 
+Selenium waits
+    Implicit wait                   Hace esperar Webdriver tiempo determinado antes de lanzar una excepción NoSuchElementException por no estar un web elemento cargado.
+                                    Esto le da tiempo al elemento deseado para aparecer en la página.
+                                    This method only needs to be called one time per session. 
+    Explicit wait                   Multiple imports. Wait until the web element needed is available to interact. Even the full web page is not loaded.
+                                    Indica a Selenium WebDriver que espere hasta que alguna condición específica se cumpla. (un elemento ser visible presente en el DOM, posición de un elemento, etc.)
+                                    La definimos cuando necesitemos esperar un elemento web este o esperar hasta que alguna condición específica se cumpla antes de executar alguna acción.
 """
-driver.implicitly_wait(30)          #Sets a sticky timeout to implicitly wait for an element to be found, or a command to complete. This method only needs to be called one time per session.
+
+#Python in build-in
+import time
+
+time.sleep()                        #Hold the script. The args= seconds int.  
+
+
+#Selenium - Implicitly wait
+driver.implicitly_wait(3)           #The args= seconds int.
+
+
+#Selenium - Explicitly wait
+from selenium.webdriver.support.wait import WebDriverWait                   # OR from selenium.webdriver.support.ui import WebDriverWait (lo mismo)
+from selenium.webdriver.support import expected_conditions as EC
+
+wait = WebDriverWait(driver,5)                                              #The args: driver used, seconds int.
+wait.until(EC.visibility_of_element_located(By.NAME, "button")).click()     #llamar funcion until, argumentos = una condicion
+                                                                            #wait = WebDriverWait(driver,5).until(EC.visibility_of_element_located(By.NAME, "button")).click() 
+                             
+                            
+# EC (expected_conditions) instancia tiene multiples condiciones, si se cumple, regresara un True
+#    EC.alert_is_present
+#    EC.element_to_be_clickable
+#    EC.element_to_be_selected
+#    EC.text_to_be_present_in_element
+#    EC.title_is
+#    EC...etc...
 
 
 
