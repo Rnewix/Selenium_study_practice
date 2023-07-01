@@ -19,6 +19,7 @@ Indice
 - Waits
 
 - Assertions (validadores/UnitTest)
+- Exceptions
 """
 
 """--------------------------------------
