@@ -1,37 +1,36 @@
 # Importaciones 
-### Librerias que gustes usar ##############
 import unittest                                                           
-from pyunitreport import HTMLTestRunner                              
+from HtmlTestRunner import HTMLTestRunner                              
 import time
 
-### Driver #################################
-from selenium import webdriver                                          #<---- Importar driver especifico para web en donde se realizara test 
-from selenium.webdriver.chrome.service import Service #as ChromeService            #<-- (Este para Chrome)
+#Selenium driver 
+from selenium import webdriver                                          
+from selenium.webdriver.chrome.service import Service as ChromeService            
 from webdriver_manager.chrome import ChromeDriverManager
 
 
-class TestName(unittest.TestCase):                                    #<---- Crear clase para un Test case (/Unittest)
-    
-    @classmethod                                                            #<---- Decorador (multiples test - una sola pagina)
-    def setUpClass(cls):                                                    #<---- Inicializa Test (Test Fixture/Unittest)
-        cls.driver = webdriver.Chrome(service=Service(ChromeDriverManager().install())) #<---Instala Driver de Browser. Asigna Driver a variable driver. 
-       #cls.driver = webdriver.Chrome(service=ChromeService(ChromeDriverManager().install()))    
+class BlogSmogTest(unittest.TestCase):                                    
+#Check if the page is able to be tested
+    @classmethod                                                            
+    def setUpClass(cls):                                                     
+        cls.driver = webdriver.Chrome(service=ChromeService(ChromeDriverManager().install()))    
         time.sleep(2)
             
             
-    def test_visit_wikipedia(self):                                     #<----Pruebas Unitarias a realizar (inician siempre con test_ (buena practica))
-        self.driver.get('https://www.wikipedia.org')                              #<--Abrir Webpage
+    def test_open_blog(self):                                     
+        #Check if the web page can be open
+        self.driver.get('http://127.0.0.1:8000/')                              
         time.sleep(2)
 
-    @classmethod                                                            #<---- Decorador (multiples test - una sola pagina)
-    def tearDownClass(cls):                                                 #<---- Instrucciones para finalizacion de la prueba (Test Fixture/Unittest)
-        cls.driver.quit()                                                         #<--cierra Webpage
+    @classmethod                                                            
+    def tearDownClass(cls):                                                 
+        cls.driver.quit()                                                         
 
 
-if __name__ == "__main__":                                          #<---- Name de la clase (iniciar codigo desde consola)
+if __name__ == "__main__":                                          
     unittest.main(                                                
         verbosity = 2,                                            
-        testRunner = HTMLTestRunner(                                    #<---- Llamar a TestRuner para generar reporte de prueba
-            output = 'report',                                                 #<-- Carpeta del reporte
-            report_name = 'test-report')                                #<-- Nombre del reporte
+        testRunner = HTMLTestRunner(                                    
+            output = 'report',                                                 
+            report_name = 'test-report')                                
             )
